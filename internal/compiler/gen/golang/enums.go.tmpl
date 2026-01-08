@@ -20,7 +20,7 @@ func (e *{{ $enum.Name }}) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	if data[0] == '"' {
+	if data[0] < '0' || data[0] > '9' {
 		var s string
 		if err := json.Unmarshal(data, &s); err != nil {
 			return err
@@ -45,6 +45,20 @@ func (e *{{ $enum.Name }}) UnmarshalJSON(data []byte) error {
 
 	*e = {{ $enum.Name }}(temp)
 
+	return nil
+}
+
+func (e *{{ $enum.Name }}) UnmarshalText(text []byte) error {
+	switch strings.ToLower(string(text)) {
+	{{- range $key := $enum.Keys }}
+	{{- if ne $key.Name "_" }}
+	case "{{ $key.Name | ToSnakeCase }}":
+		*e = {{ $enum.Name }}_{{ $key.Name }}
+	{{- end }}	
+	{{- end }}
+	default:
+		return fmt.Errorf("invalid enum value: %s", string(text))
+	}
 	return nil
 }
 
