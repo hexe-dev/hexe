@@ -36,6 +36,7 @@ func (e *{{ $enum.Name }}) UnmarshalJSON(data []byte) error {
 		default:
 			return fmt.Errorf("{{ $enum.Name }} invalid enum value: %s", string(data))
 		}
+		return nil
 	}
 	
 	var temp int8

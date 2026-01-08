@@ -2,7 +2,7 @@
 ▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖
 ▐▌ ▐▌▐▌    ▝▚▞▘ ▐▌
 ▐▛▀▜▌▐▛▀▀▘  ▐▌  ▐▛▀▀▘
-▐▌ ▐▌▐▙▄▄▖▗▞▘▝▚▖▐▙▄▄▖ v0.1.4
+▐▌ ▐▌▐▙▄▄▖▗▞▘▝▚▖▐▙▄▄▖ v0.1.5
 ```
 
 HEXE, is yet another compiler to produce Go and Typescript code based on simple and easy-to-read schema IDL. There are many tools like gRPC, Twirp or event WebRPC to generate codes, but this little compiler is designed based on my views of 12+ years of developing backends and APIs. I wanted to simplify the tooling and produce almost perfect optimized, handcrafted code that can be read and understood.
@@ -18,7 +18,7 @@ HEXE's schema went through several iterations to make it easier for extension an
 to install HEXE's compiler, simply use the go install command
 
 ```bash
-go install github.com/hexe-dev/hexe@v0.1.4
+go install github.com/hexe-dev/hexe@v0.1.5
 ```
 
 # Usage
@@ -43,7 +43,7 @@ The full CLI documentation can be accessed by running HEXE command without any a
 ▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖
 ▐▌ ▐▌▐▌    ▝▚▞▘ ▐▌
 ▐▛▀▜▌▐▛▀▀▘  ▐▌  ▐▛▀▀▘
-▐▌ ▐▌▐▙▄▄▖▗▞▘▝▚▖▐▙▄▄▖ v0.1.4
+▐▌ ▐▌▐▙▄▄▖▗▞▘▝▚▖▐▙▄▄▖ v0.1.5
 
 Usage: hexe [command]
 
