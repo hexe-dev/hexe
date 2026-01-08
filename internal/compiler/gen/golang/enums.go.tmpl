@@ -14,21 +14,41 @@ const (
 	{{- end }}
 )
 
-func (e *{{ $enum.Name }}) UnmarshalText(text []byte) error {
-	switch strings.ToLower(string(text)) {
-	{{- range $key := $enum.Keys }}
-	{{- if ne $key.Name "_" }}
-	case "{{ $key.Name | ToSnakeCase }}":
-		*e = {{ $enum.Name }}_{{ $key.Name }}
-	{{- end }}	
-	{{- end }}
-	default:
-		return fmt.Errorf("invalid enum value: %s", string(text))
+func (e *{{ $enum.Name }}) UnmarshalJSON(data []byte) error {
+	data = bytes.TrimSpace(data)
+	if len(data) == 0 || bytes.Equal(data, []byte("null")) {
+		return nil
 	}
+
+	if data[0] == '"' {
+		var s string
+		if err := json.Unmarshal(data, &s); err != nil {
+			return err
+		}
+
+		switch strings.ToLower(string(data)) {
+		{{- range $key := $enum.Keys }}
+		{{- if ne $key.Name "_" }}
+		case "{{ $key.Name | ToSnakeCase }}":
+			*e = {{ $enum.Name }}_{{ $key.Name }}
+		{{- end }}	
+		{{- end }}
+		default:
+			return fmt.Errorf("{{ $enum.Name }} invalid enum value: %s", string(data))
+		}
+	}
+	
+	var temp int8
+	if err := json.Unmarshal(data, &temp); err != nil {
+		return fmt.Errorf("{{ $enum.Name }} must be string or number, got %s: %w", string(data), err)
+	}
+
+	*e = {{ $enum.Name }}(temp)
+
 	return nil
 }
 
-func (e {{ $enum.Name }}) MarshalText() ([]byte, error) {
+func (e {{ $enum.Name }}) MarshalJSON() ([]byte, error) {
 	name := e.String()
 	if name == "" {
 		return nil, fmt.Errorf("invalid enum {{ $enum.Name }} value: %v", e)
@@ -51,18 +71,6 @@ func (e {{ $enum.Name }}) String() string {
 	return name
 }
 
-func (e *{{ $enum.Name }}) UnmarshalJSON(data []byte) error {
-if len(data) > 0 && data[0] == '"' {
-		return e.UnmarshalText(data)
-	}
-	var temp {{ $enum.Type }}
-	err := json.Unmarshal(data, &temp)
-	if err != nil {
-		return err
-	}
-	*e = {{ $enum.Name }}(temp)
-	return nil
-}
 {{ end }}
 
 {{- end }}
