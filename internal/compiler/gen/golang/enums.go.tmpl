@@ -26,7 +26,7 @@ func (e *{{ $enum.Name }}) UnmarshalJSON(data []byte) error {
 			return err
 		}
 
-		switch strings.ToLower(string(data)) {
+		switch strings.ToLower(string(s)) {
 		{{- range $key := $enum.Keys }}
 		{{- if ne $key.Name "_" }}
 		case "{{ $key.Name | ToSnakeCase }}":

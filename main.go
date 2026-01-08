@@ -11,7 +11,7 @@ import (
 	"github.com/hexe-dev/hexe/internal/compiler/parser"
 )
 
-const Version = "0.1.3"
+const Version = "0.1.4"
 
 const usage = `
 ▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖
